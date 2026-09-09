@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --color-club-green-50: #f0f7f2;
+  --color-club-green-100: #dcefe4;
+  --color-club-green-200: #bcdccc;
+  --color-club-green-300: #93c2ad;
+  --color-club-green-400: #6ba58b;
+  --color-club-green-500: #4c8a6e;
+  --color-club-green-600: #3a6f58;
+  --color-club-green-700: #315c49;
+  --color-club-green-800: #254c3b;
+  --color-club-green-900: #1d3d30;
+  --color-club-gold-50: #fbf8ec;
+  --color-club-gold-100: #f6f0d8;
+  --color-club-gold-200: #ede0ae;
+  --color-club-gold-300: #e1cb7e;
+  --color-club-gold-400: #d5b554;
+  --color-club-gold-500: #c9a32d;
+  --color-club-gold-600: #b08c25;
+  --color-club-gold-700: #8a6d1d;
+  --color-club-gold-800: #6b5417;
+  --color-club-gold-900: #4a3a10;
+}
+
+:root {
+  --club-primary: #c9a32d;
+  --club-accent: #8a6d1d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+::selection {
+  background-color: #e1cb7e;
+  color: #0f172a;
+}
