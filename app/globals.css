@@ -1,16 +1,4 @@
-@import 'tailwindcss';
-
 @theme inline {
-  --color-club-green-50: #f0f7f2;
-  --color-club-green-100: #dcefe4;
-  --color-club-green-200: #bcdccc;
-  --color-club-green-300: #93c2ad;
-  --color-club-green-400: #6ba58b;
-  --color-club-green-500: #4c8a6e;
-  --color-club-green-600: #3a6f58;
-  --color-club-green-700: #315c49;
-  --color-club-green-800: #254c3b;
-  --color-club-green-900: #1d3d30;
   --color-club-gold-50: #fbf8ec;
   --color-club-gold-100: #f6f0d8;
   --color-club-gold-200: #ede0ae;
@@ -21,23 +9,40 @@
   --color-club-gold-700: #8a6d1d;
   --color-club-gold-800: #6b5417;
   --color-club-gold-900: #4a3a10;
+  --color-club-sienna-50: #faf0e9;
+  --color-club-sienna-100: #f5e0d2;
+  --color-club-sienna-200: #e8c8b4;
+  --color-club-sienna-300: #d8ada0;
+  --color-club-sienna-400: #c28c78;
+  --color-club-sienna-500: #a66b56;
+  --color-club-sienna-600: #8a5542;
+  --color-club-sienna-700: #664231;
+  --color-club-sienna-800: #503427;
+  --color-club-sienna-900: #3d2a21;
+  --color-club-green-50: #f0f7f3;
+  --color-club-green-100: #d6ece0;
+  --color-club-green-200: #aed9c1;
+  --color-club-green-300: #7dbf9c;
+  --color-club-green-400: #4fa078;
+  --color-club-green-500: #254c3b;
+  --color-club-green-600: #1e3f31;
+  --color-club-green-700: #183228;
+  --color-club-green-800: #12251e;
+  --color-club-green-900: #0c1814;
 }
-
 :root {
   --club-primary: #c9a32d;
   --club-accent: #8a6d1d;
+  --club-secondary: #6b5417;
 }
-
 html {
   scroll-behavior: smooth;
 }
-
 body {
   background-color: #ffffff;
   color: #0f172a;
   font-feature-settings: 'cv11', 'ss01';
 }
-
 ::selection {
   background-color: #e1cb7e;
   color: #0f172a;

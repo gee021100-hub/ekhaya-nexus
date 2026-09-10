@@ -9,16 +9,16 @@ export const metadata: Metadata = {
     template: '%s | Ekhaya Nexus',
   },
   description:
-    'EKHAYA NEXUS — football team management and statistics for Ekhaya FC. Senior, Women\u2019s, Reserve and Youth team info, standings, results, fixtures and performance.',
+    'EKHAYA NEXUS — football team management and statistics for Ekhaya FC. Senior, Women\u2019s, Reserve and Youth team info, standings, results, fixtures and performance. Airtel Top 8 champions.',
   applicationName: 'EKHAYA NEXUS',
-  keywords: ['Ekhaya FC', 'football', 'team management', 'Malawi football', 'standings', 'results', 'fixtures'],
+  keywords: ['Ekhaya FC', 'football', 'team management', 'Malawi football', 'standings', 'results', 'fixtures', 'Aitel Top 8'],
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
   ),
   openGraph: {
     title: 'EKHAYA NEXUS',
     description:
-      'Football team management & statistics for Ekhaya FC.',
+      'Football team management & statistics for Ekhaya FC. Airtel Top 8 champions.',
     type: 'website',
     locale: 'en_ZA',
   },

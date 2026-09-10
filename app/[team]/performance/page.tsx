@@ -1,0 +1,47 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getTeamBySlug, getPerformance, getCompetitions } from '@/lib/data';
+import { TEAMS, type TeamSlug } from '@/types';
+import { TeamNav } from '@/components/team-nav';
+import { PerformanceView } from '@/components/performance-view';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: 'Senior Team — Performance' };
+}
+
+export default async function PerformancePage() {
+  const slug = 'senior';
+  const config = TEAMS.find((t) => t.slug === slug);
+  if (!config || !config.hasPerformance) notFound();
+
+  const team = await getTeamBySlug(slug);
+  if (!team) notFound();
+
+  const [performance, competitions] = await Promise.all([
+    getPerformance(),
+    getCompetitions(),
+  ]);
+
+  const performanceMap: Record<string, typeof performance> = {};
+  for (const comp of competitions) {
+    performanceMap[comp.id] = performance.filter((p) => p.competition_id === comp.id);
+  }
+
+  return (
+    <div>
+      <div className="border-b border-slate-200 bg-club-green-700 px-4 py-8 text-white sm:py-12">
+        <div className="mx-auto max-w-7xl">
+          <h1 className="text-3xl font-black tracking-tight">{config.name} — Performance</h1>
+          <p className="mt-1 text-sm text-white/70">Player statistics by competition</p>
+        </div>
+      </div>
+      <TeamNav teamSlug={slug as TeamSlug} />
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <PerformanceView
+          competitions={competitions}
+          initialPerformance={performanceMap}
+        />
+      </div>
+    </div>
+  );
+}
