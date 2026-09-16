@@ -35,6 +35,23 @@ Performance page supports competition selection:
 
 Performance contains Competition, Medical, Minutes Played, Goals and Assists.
 
+## Administration
+
+An area at `/admin` supports club management with six modules:
+
+| Module                    | Purpose                                        |
+|---------------------------|------------------------------------------------|
+| Player Registration       | Register players with team, position, DOB, fee |
+| Transfers                 | Record incoming and outgoing player transfers  |
+| Weekly Budget Preparation | Build weekly budgets and line items            |
+| Petty Cash                | Track small cash inflows/outflows + balance    |
+| Staff Allowance           | Manage allowance payments for club staff       |
+| Training Allocation       | Schedule team training sessions with budgets   |
+
+Each module provides a data-entry form (server actions writing to Supabase) and
+a list of the existing records. Admin tables start empty — records are entered
+by club staff; no financial or operational data is invented.
+
 ## Player profiles
 
 Clicking a player opens their profile with:
@@ -55,8 +72,13 @@ fixtures, results, and performance (competition, medical, minutes played, goals,
 assists). Every player belongs to a team; fixtures/results belong to a team;
 performance belongs to the Senior Team and is connected to a competition.
 
-Schema lives in `supabase/migrations/000000_ekhaya_nexus.sql`, seed data in
-`supabase/seed/seed.sql`.
+Administration tables: `registrations`, `transfers`, `weekly_budgets`
+(+ `budget_items`), `petty_cash_transactions`, `staff_allowances`, and
+`training_allocations`. These have public read + insert RLS policies so staff
+can add records through the admin area.
+
+Schema lives in `supabase/migrations/` (core in `000000_ekhaya_nexus.sql`,
+administration in `000001_admin.sql`), seed data in `supabase/seed/seed.sql`.
 
 When Supabase is not yet configured (env vars absent), the app serves the same
 supplied data in-memory so development and testing work immediately. Once you

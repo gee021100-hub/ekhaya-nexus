@@ -97,6 +97,97 @@ export interface Database {
           created_at: string;
         };
       };
+      registrations: {
+        Row: {
+          id: string;
+          team_id: string;
+          player_name: string;
+          position: string | null;
+          date_of_birth: string | null;
+          registration_date: string;
+          fee_amount: number | null;
+          status: 'pending' | 'approved' | 'rejected';
+          notes: string | null;
+          created_at: string;
+        };
+      };
+      transfers: {
+        Row: {
+          id: string;
+          team_id: string;
+          player_name: string;
+          transfer_type: 'in' | 'out';
+          other_club: string;
+          transfer_date: string;
+          fee_amount: number | null;
+          status: 'pending' | 'completed' | 'cancelled';
+          notes: string | null;
+          created_at: string;
+        };
+      };
+      weekly_budgets: {
+        Row: {
+          id: string;
+          week_start: string;
+          week_end: string;
+          status: 'draft' | 'approved' | 'paid';
+          notes: string | null;
+          created_at: string;
+        };
+      };
+      budget_items: {
+        Row: {
+          id: string;
+          budget_id: string;
+          category: string;
+          description: string | null;
+          planned_amount: number | null;
+          actual_amount: number | null;
+          created_at: string;
+        };
+      };
+      petty_cash_transactions: {
+        Row: {
+          id: string;
+          transaction_date: string;
+          transaction_type: 'in' | 'out';
+          description: string;
+          amount: number | null;
+          category: string | null;
+          requestor: string | null;
+          approved_by: string | null;
+          notes: string | null;
+          created_at: string;
+        };
+      };
+      staff_allowances: {
+        Row: {
+          id: string;
+          team_id: string | null;
+          staff_name: string;
+          role: string | null;
+          period_start: string;
+          period_end: string;
+          amount: number | null;
+          status: 'pending' | 'paid';
+          notes: string | null;
+          created_at: string;
+        };
+      };
+      training_allocations: {
+        Row: {
+          id: string;
+          team_id: string;
+          training_date: string;
+          location: string | null;
+          session_type: string | null;
+          description: string | null;
+          players_invited: number | null;
+          budget_amount: number | null;
+          status: 'scheduled' | 'completed' | 'cancelled';
+          created_at: string;
+        };
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

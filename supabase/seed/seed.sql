@@ -103,3 +103,8 @@ INSERT INTO performance (player_id, competition_id, goals, assists, medical, min
   ('c1000000-0000-0000-0000-000000000003', 'b1000000-0000-0000-0000-000000000002', 1, 1, NULL, NULL),
   ('c1000000-0000-0000-0000-000000000004', 'b1000000-0000-0000-0000-000000000002', NULL, 1, NULL, NULL),
   ('c1000000-0000-0000-0000-000000000009', 'b1000000-0000-0000-0000-000000000002', NULL, 1, NULL, NULL);
+
+-- Administration tables (registrations, transfers, weekly_budgets, budget_items,
+-- petty_cash_transactions, staff_allowances, training_allocations) are created in
+-- migration 000001_admin.sql and start empty. Records are entered by staff via the
+-- admin area.

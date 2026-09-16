@@ -1,5 +1,20 @@
 import { createClient, supabaseConfigured } from '@/lib/supabase/server';
-import type { Team, Player, Competition, Standing, Fixture, Result, Performance } from '@/types';
+import type {
+  Team,
+  Player,
+  Competition,
+  Standing,
+  Fixture,
+  Result,
+  Performance,
+  Registration,
+  Transfer,
+  WeeklyBudget,
+  BudgetItem,
+  PettyCashTransaction,
+  StaffAllowance,
+  TrainingAllocation,
+} from '@/types';
 
 /* ------------------------------------------------------------------ */
 /*  In-memory seed (used when Supabase env vars are absent)            */
@@ -107,6 +122,13 @@ const SEED_PERFORMANCE: Performance[] = [
   { id: 'g1000000-0000-0000-0000-000000000014', player_id: 'c1000000-0000-0000-0000-000000000009', competition_id: 'b1000000-0000-0000-0000-000000000002', goals: null, assists: 1, medical: null, minutes_played: null, player_name: 'Isaiah Nyirenda', competition_name: 'Airtel Cup', created_at: '2026-01-01T00:00:00Z' },
 ];
 
+const SEED_REGISTRATIONS: Registration[] = [];
+const SEED_TRANSFERS: Transfer[] = [];
+const SEED_WEEKLY_BUDGETS: WeeklyBudget[] = [];
+const SEED_PETTY_CASH: PettyCashTransaction[] = [];
+const SEED_STAFF_ALLOWANCES: StaffAllowance[] = [];
+const SEED_TRAINING_ALLOCATIONS: TrainingAllocation[] = [];
+
 /* ------------------------------------------------------------------ */
 /*  Supabase queries                                                   */
 /* ------------------------------------------------------------------ */
@@ -188,6 +210,64 @@ async function dbGetCompetitions(): Promise<Competition[]> {
   return (data as Competition[]) ?? [];
 }
 
+async function dbGetRegistrations(): Promise<Registration[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('registrations')
+    .select('*')
+    .order('registration_date', { ascending: false });
+  return (data as Registration[]) ?? [];
+}
+
+async function dbGetTransfers(): Promise<Transfer[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('transfers')
+    .select('*')
+    .order('transfer_date', { ascending: false });
+  return (data as Transfer[]) ?? [];
+}
+
+async function dbGetWeeklyBudgets(): Promise<WeeklyBudget[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('weekly_budgets')
+    .select('*, budget_items(*)')
+    .order('week_start', { ascending: false });
+  if (!data) return [];
+  return data.map((row: Record<string, unknown>) => ({
+    ...(row as unknown as WeeklyBudget),
+    items: (row.budget_items as unknown as BudgetItem[]) ?? [],
+  }));
+}
+
+async function dbGetPettyCash(): Promise<PettyCashTransaction[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('petty_cash_transactions')
+    .select('*')
+    .order('transaction_date', { ascending: false });
+  return (data as PettyCashTransaction[]) ?? [];
+}
+
+async function dbGetStaffAllowances(): Promise<StaffAllowance[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('staff_allowances')
+    .select('*')
+    .order('period_start', { ascending: false });
+  return (data as StaffAllowance[]) ?? [];
+}
+
+async function dbGetTrainingAllocations(): Promise<TrainingAllocation[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('training_allocations')
+    .select('*')
+    .order('training_date', { ascending: false });
+  return (data as TrainingAllocation[]) ?? [];
+}
+
 /* ------------------------------------------------------------------ */
 /*  Public API — tries Supabase, falls back to in-memory seed          */
 /* ------------------------------------------------------------------ */
@@ -235,4 +315,34 @@ export async function getPerformance(): Promise<Performance[]> {
 export async function getCompetitions(): Promise<Competition[]> {
   if (!supabaseConfigured()) return SEED_COMPETITIONS;
   return dbGetCompetitions();
+}
+
+export async function getRegistrations(): Promise<Registration[]> {
+  if (!supabaseConfigured()) return SEED_REGISTRATIONS;
+  return dbGetRegistrations();
+}
+
+export async function getTransfers(): Promise<Transfer[]> {
+  if (!supabaseConfigured()) return SEED_TRANSFERS;
+  return dbGetTransfers();
+}
+
+export async function getWeeklyBudgets(): Promise<WeeklyBudget[]> {
+  if (!supabaseConfigured()) return SEED_WEEKLY_BUDGETS;
+  return dbGetWeeklyBudgets();
+}
+
+export async function getPettyCashTransactions(): Promise<PettyCashTransaction[]> {
+  if (!supabaseConfigured()) return SEED_PETTY_CASH;
+  return dbGetPettyCash();
+}
+
+export async function getStaffAllowances(): Promise<StaffAllowance[]> {
+  if (!supabaseConfigured()) return SEED_STAFF_ALLOWANCES;
+  return dbGetStaffAllowances();
+}
+
+export async function getTrainingAllocations(): Promise<TrainingAllocation[]> {
+  if (!supabaseConfigured()) return SEED_TRAINING_ALLOCATIONS;
+  return dbGetTrainingAllocations();
 }

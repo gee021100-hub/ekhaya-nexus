@@ -107,6 +107,15 @@ export default async function HomePage() {
                 Player stats broken down by competition.
               </p>
             </Link>
+            <Link
+              href="/admin"
+              className="rounded-xl border bg-white p-5 shadow-sm transition-all hover:shadow-md"
+            >
+              <h3 className="font-bold text-slate-900">Administration</h3>
+              <p className="mt-1 text-sm text-slate-500">
+                Register players, transfers, budgets, petty cash, staff and training.
+              </p>
+            </Link>
           </div>
         </div>
       </section>

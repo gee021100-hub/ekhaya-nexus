@@ -37,14 +37,6 @@
   "exclude": [
     "node_modules",
     "supabase",
-    "middleware.ts",
-    "lib/memberships",
-    "lib/auth",
-    "lib/payments",
-    "lib/qr",
-    "lib/notifications",
-    "lib/schemas",
-    "lib/constants.ts",
-    "services"
+    "middleware.ts"
   ]
 }

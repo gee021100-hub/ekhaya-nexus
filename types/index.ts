@@ -82,6 +82,91 @@ export interface Performance {
 
 export type TeamSlug = 'senior' | 'women' | 'reserve' | 'youth';
 
+export interface Registration {
+  id: ID;
+  team_id: ID;
+  player_name: string;
+  position: string | null;
+  date_of_birth: string | null;
+  registration_date: string;
+  fee_amount: number | null;
+  status: 'pending' | 'approved' | 'rejected';
+  notes: string | null;
+  created_at: string;
+}
+
+export interface Transfer {
+  id: ID;
+  team_id: ID;
+  player_name: string;
+  transfer_type: 'in' | 'out';
+  other_club: string;
+  transfer_date: string;
+  fee_amount: number | null;
+  status: 'pending' | 'completed' | 'cancelled';
+  notes: string | null;
+  created_at: string;
+}
+
+export interface WeeklyBudget {
+  id: ID;
+  week_start: string;
+  week_end: string;
+  status: 'draft' | 'approved' | 'paid';
+  notes: string | null;
+  created_at: string;
+  items?: BudgetItem[];
+}
+
+export interface BudgetItem {
+  id: ID;
+  budget_id: ID;
+  category: string;
+  description: string | null;
+  planned_amount: number | null;
+  actual_amount: number | null;
+  created_at: string;
+}
+
+export interface PettyCashTransaction {
+  id: ID;
+  transaction_date: string;
+  transaction_type: 'in' | 'out';
+  description: string;
+  amount: number | null;
+  category: string | null;
+  requestor: string | null;
+  approved_by: string | null;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface StaffAllowance {
+  id: ID;
+  team_id: ID | null;
+  staff_name: string;
+  role: string | null;
+  period_start: string;
+  period_end: string;
+  amount: number | null;
+  status: 'pending' | 'paid';
+  notes: string | null;
+  created_at: string;
+}
+
+export interface TrainingAllocation {
+  id: ID;
+  team_id: ID;
+  training_date: string;
+  location: string | null;
+  session_type: string | null;
+  description: string | null;
+  players_invited: number | null;
+  budget_amount: number | null;
+  status: 'scheduled' | 'completed' | 'cancelled';
+  created_at: string;
+}
+
 export interface TeamConfig {
   slug: TeamSlug;
   name: string;

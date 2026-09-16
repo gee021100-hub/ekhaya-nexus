@@ -5,12 +5,18 @@ import { TEAMS, type TeamSlug } from '@/types';
 import { TeamNav } from '@/components/team-nav';
 import { PerformanceView } from '@/components/performance-view';
 
-export async function generateMetadata(): Promise<Metadata> {
-  return { title: 'Senior Team — Performance' };
+export async function generateStaticParams() {
+  return TEAMS.filter((t) => t.hasPerformance).map((t) => ({ team: t.slug }));
 }
 
-export default async function PerformancePage() {
-  const slug = 'senior';
+export async function generateMetadata({ params }: { params: Promise<{ team: string }> }): Promise<Metadata> {
+  const { team } = await params;
+  const config = TEAMS.find((t) => t.slug === team);
+  return { title: config?.hasPerformance ? `${config.name} — Performance` : 'Performance' };
+}
+
+export default async function PerformancePage({ params }: { params: Promise<{ team: string }> }) {
+  const { team: slug } = await params;
   const config = TEAMS.find((t) => t.slug === slug);
   if (!config || !config.hasPerformance) notFound();
 

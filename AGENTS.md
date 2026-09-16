@@ -27,12 +27,20 @@ Always run `pnpm typecheck` and `pnpm lint` after changing code.
 - Player profiles contain Name, Strong foot, Age, Position, Goals, Assists —
   only populate fields for which data has been provided. Missing data stays
   empty (do not convert to fake zeros that aren't in the data).
+- Administration area under `app/admin/` provides six modules: player
+  registration, transfers, weekly budget preparation (weekly_budgets +
+  budget_items), petty cash, staff allowances and training allocations.
+  Admin tables start empty (no invented financial/operational data); records
+  are entered by staff via the admin forms, which persist through the server
+  actions in `app/admin/actions.ts` (Supabase inserts). Admin tables have
+  public read + insert RLS policies.
 - Database schema lives in `supabase/migrations/`; seed in
   `supabase/seed/seed.sql`.
 - When Supabase env vars (`NEXT_PUBLIC_SUPABASE_URL`,
   `NEXT_PUBLIC_SUPABASE_ANON_KEY`) are absent, `lib/data.ts` falls back to the
   in-memory seed so the app runs without a database. Keep the fallback in sync
-  with the SQL seed.
-- Do not add Membership, Finance, Communication or unrelated modules.
+  with the SQL seed. Admin reads fall back to empty arrays when no database is
+  configured.
+- Do not add Membership, Communication or unrelated consumer modules.
 - No invented football data, players, match results, fixtures or statistics.
 - The UI is responsive on desktop, tablet and mobile.
