@@ -1,4 +1,4 @@
--- Ekhaya Nexus: Seed data
+-- Ekhaya All-in-One: Seed data
 
 -- Teams
 INSERT INTO teams (id, name, slug, description) VALUES

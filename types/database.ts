@@ -1,5 +1,5 @@
 /**
- * Database types for Ekhaya Nexus.
+ * Database types for Ekhaya All-in-One.
  * Run `pnpm db:types` after connecting a database to regenerate.
  */
 

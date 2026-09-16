@@ -1,4 +1,4 @@
-# EKHAYA NEXUS
+# EKHAYA ALL-IN-ONE
 
 Football team management and statistics web application for **Ekhaya FC**.
 
@@ -79,6 +79,7 @@ can add records through the admin area.
 
 Schema lives in `supabase/migrations/` (core in `000000_ekhaya_nexus.sql`,
 administration in `000001_admin.sql`), seed data in `supabase/seed/seed.sql`.
+The app runs without a database using in-memory seed data.
 
 When Supabase is not yet configured (env vars absent), the app serves the same
 supplied data in-memory so development and testing work immediately. Once you

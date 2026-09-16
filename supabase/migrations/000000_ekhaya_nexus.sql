@@ -1,4 +1,4 @@
--- Ekhaya Nexus: Core schema for team management
+-- Ekhaya All-in-One: Core schema for team management
 
 -- Teams
 CREATE TABLE teams (

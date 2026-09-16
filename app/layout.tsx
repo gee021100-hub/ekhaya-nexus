@@ -5,18 +5,18 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Ekhaya Nexus',
-    template: '%s | Ekhaya Nexus',
+    default: 'Ekhaya All-in-One',
+    template: '%s | Ekhaya All-in-One',
   },
   description:
-    'EKHAYA NEXUS — football team management and statistics for Ekhaya FC. Senior, Women\u2019s, Reserve and Youth team info, standings, results, fixtures and performance. Airtel Top 8 champions.',
-  applicationName: 'EKHAYA NEXUS',
+    'EKHAYA ALL-IN-ONE — football team management and statistics for Ekhaya FC. Senior, Women\u2019s, Reserve and Youth team info, standings, results, fixtures and performance. Airtel Top 8 champions.',
+  applicationName: 'EKHAYA ALL-IN-ONE',
   keywords: ['Ekhaya FC', 'football', 'team management', 'Malawi football', 'standings', 'results', 'fixtures', 'Aitel Top 8'],
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
   ),
   openGraph: {
-    title: 'EKHAYA NEXUS',
+    title: 'EKHAYA ALL-IN-ONE',
     description:
       'Football team management & statistics for Ekhaya FC. Airtel Top 8 champions.',
     type: 'website',

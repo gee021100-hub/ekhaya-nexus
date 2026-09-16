@@ -8,7 +8,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <Brand subtitle="Ekhaya Nexus" />
+            <Brand subtitle="Ekhaya All-in-One" />
             <p className="mt-3 max-w-xs text-sm text-slate-500">
               Football team management and statistics for Ekhaya Football Club.
             </p>

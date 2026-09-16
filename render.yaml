@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ekhaya-nexus
+    name: ekhaya-all-in-one
     runtime: node
     plan: free
     region: frankfurt
@@ -9,9 +9,9 @@ services:
     healthCheckPath: /
     envVars:
       - key: NEXT_PUBLIC_APP_URL
-        value: https://ekhaya-nexus.onrender.com
+        value: https://ekhaya-all-in-one-2.onrender.com
       - key: APP_NAME
-        value: EKHAYA NEXUS
+        value: EKHAYA ALL-IN-ONE
       - key: NODE_VERSION
         value: "22"
       - key: NEXT_PUBLIC_SUPABASE_URL

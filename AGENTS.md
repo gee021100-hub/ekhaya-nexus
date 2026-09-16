@@ -1,6 +1,6 @@
 # Agent instructions
 
-Work-here conventions for the Ekhaya Nexus platform.
+Work-here conventions for the Ekhaya All-in-One platform.
 
 ## Commands
 

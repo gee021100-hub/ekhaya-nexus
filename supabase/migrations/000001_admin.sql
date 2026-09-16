@@ -1,4 +1,4 @@
--- Ekhaya Nexus: Administration schema
+-- Ekhaya All-in-One: Administration schema
 -- Player registration, transfers, weekly budgets, petty cash,
 -- staff allowances and training allocations.
 

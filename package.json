@@ -1,8 +1,8 @@
 {
-  "name": "ekhaya-nexus",
+  "name": "ekhaya-all-in-one",
   "version": "1.0.0",
   "private": true,
-  "description": "EKHAYA NEXUS - Football team management and statistics for Ekhaya FC",
+  "description": "EKHAYA ALL-IN-ONE - Football team management and statistics for Ekhaya FC",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
