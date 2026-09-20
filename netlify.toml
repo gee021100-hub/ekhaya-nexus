@@ -1,5 +1,5 @@
 [build]
-  command = "npm install -g pnpm@9.15.0 --no-audit --no-fund && pnpm build"
+  command = "pnpm build"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
