@@ -4,10 +4,10 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white px-4">
       <div className="mx-auto max-w-md text-center">
-        <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-club-green-100 text-2xl font-black text-club-green-700">
+        <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-club-gold-100 font-display text-2xl font-semibold text-club-gold-800">
           EF
         </div>
-        <h1 className="text-3xl font-black tracking-tight text-slate-900">Page not found</h1>
+        <h1 className="font-display text-3xl font-semibold uppercase tracking-wide text-club-ink">Page not found</h1>
         <p className="mt-3 text-slate-600">
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>

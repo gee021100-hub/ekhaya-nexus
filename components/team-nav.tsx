@@ -43,10 +43,10 @@ export function TeamNav({ teamSlug }: { teamSlug: TeamSlug }) {
                 key={tab.label}
                 href={tab.href}
                 className={cn(
-                  'whitespace-nowrap border-b-2 px-4 py-3 text-sm font-medium transition-colors',
+                  'whitespace-nowrap border-b-2 px-4 py-3 text-sm font-semibold transition-colors',
                   active
-                    ? 'border-club-green-600 text-club-green-700'
-                    : 'border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-900',
+                    ? 'border-club-gold text-club-ink'
+                    : 'border-transparent text-[#8a8a8a] hover:border-club-gold-300 hover:text-club-ink',
                 )}
               >
                 {tab.label}

@@ -1,49 +1,479 @@
 @theme inline {
-  --color-club-gold-50: #fbf8ec;
-  --color-club-gold-100: #f6f0d8;
-  --color-club-gold-200: #ede0ae;
-  --color-club-gold-300: #e1cb7e;
-  --color-club-gold-400: #d5b554;
-  --color-club-gold-500: #c9a32d;
-  --color-club-gold-600: #b08c25;
-  --color-club-gold-700: #8a6d1d;
-  --color-club-gold-800: #6b5417;
-  --color-club-gold-900: #4a3a10;
-  --color-club-sienna-50: #faf0e9;
-  --color-club-sienna-100: #f5e0d2;
-  --color-club-sienna-200: #e8c8b4;
-  --color-club-sienna-300: #d8ada0;
-  --color-club-sienna-400: #c28c78;
-  --color-club-sienna-500: #a66b56;
-  --color-club-sienna-600: #8a5542;
-  --color-club-sienna-700: #664231;
-  --color-club-sienna-800: #503427;
-  --color-club-sienna-900: #3d2a21;
-  --color-club-green-50: #f0f7f3;
-  --color-club-green-100: #d6ece0;
-  --color-club-green-200: #aed9c1;
-  --color-club-green-300: #7dbf9c;
-  --color-club-green-400: #4fa078;
-  --color-club-green-500: #254c3b;
-  --color-club-green-600: #1e3f31;
-  --color-club-green-700: #183228;
-  --color-club-green-800: #12251e;
-  --color-club-green-900: #0c1814;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-oswald);
+
+  --color-club-gold-50: #FBF6E6;
+  --color-club-gold-100: #F6EFD1;
+  --color-club-gold-200: #EDDFA8;
+  --color-club-gold-300: #E7CE7A;
+  --color-club-gold-400: #D8B84F;
+  --color-club-gold-500: #C9A227;
+  --color-club-gold-600: #B08C20;
+  --color-club-gold-700: #8A6D1D;
+  --color-club-gold-800: #6B5417;
+  --color-club-gold-900: #4A3A10;
+  /* Legacy "club-green" tokens aliased to the white-and-gold palette so the
+     whole system renders in gold instead of green. */
+  --color-club-green-50: #FBF6E6;
+  --color-club-green-100: #F6EFD1;
+  --color-club-green-200: #EDDFA8;
+  --color-club-green-300: #E7CE7A;
+  --color-club-green-400: #D8B84F;
+  --color-club-green-500: #C9A227;
+  --color-club-green-600: #B08C20;
+  --color-club-green-700: #8A6D1D;
+  --color-club-green-800: #6B5417;
+  --color-club-green-900: #4A3A10;
+  /* Fan-app ink (near-black) used for text, the scoreboard and the splash. */
+  --color-club-ink: #161616;
+  --color-club-ink-soft: #2A2A2A;
+  --color-club-offwhite: #F7F5F0;
+  --color-club-border: #E7E2D6;
+  --color-club-goldlight: #E7CE7A;
+  --color-club-highlight: #FBF3D9;
 }
 :root {
-  --club-primary: #c9a32d;
+  --club-primary: #c9a227;
   --club-accent: #8a6d1d;
   --club-secondary: #6b5417;
+  --club-ink: #161616;
 }
 html {
   scroll-behavior: smooth;
 }
 body {
-  background-color: #ffffff;
-  color: #0f172a;
+  background-color: #f7f5f0;
+  color: #3d3d3d;
   font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
 }
 ::selection {
-  background-color: #e1cb7e;
-  color: #0f172a;
+  background-color: #ede0ae;
+  color: #161616;
+}
+
+/* Slim gold scrollbar for a more polished feel */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f2eee2;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8c06a;
+  border-radius: 9999px;
+  border: 2px solid #f2eee2;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a227;
+}
+
+/* Display headings use the condensed Oswald face, like the fan app. */
+.font-display {
+  font-family: var(--font-oswald);
+  letter-spacing: 0.01em;
+}
+
+/* Gentle entrance used by cards/sections */
+@keyframes ekhaya-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ekhaya-rise {
+  animation: ekhaya-rise 0.5s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ekhaya-rise {
+    animation: none;
+  }
+}
+
+/* Fan-app brand utilities -------------------------------------------------- */
+
+/* Primary gold button (flat gold, ink text, 10px radius like the fan app) */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.625rem;
+  background-color: #c9a227;
+  color: #161616;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.6875rem 1.5rem;
+  box-shadow: 0 1px 2px rgba(22, 22, 22, 0.08), 0 6px 16px -8px rgba(138, 109, 29, 0.5);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+.btn-gold:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+.btn-gold:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(138, 109, 29, 0.4);
+}
+
+/* Secondary dark button */
+.btn-ink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.625rem;
+  background-color: #161616;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.6875rem 1.5rem;
+  box-shadow: 0 1px 2px rgba(22, 22, 22, 0.1), 0 10px 24px -12px rgba(22, 22, 22, 0.6);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+.btn-ink:hover {
+  transform: translateY(-1px);
+  background-color: #2a2a2a;
+}
+.btn-ink:active {
+  transform: translateY(0);
+}
+
+/* Outline variant for dark surfaces */
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.625rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.6875rem 1.5rem;
+  backdrop-filter: blur(6px);
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+.btn-outline-light:hover {
+  transform: translateY(-1px);
+  background-color: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Gold-outline button (fan-app "select" secondary) */
+.btn-outline-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.625rem;
+  border: 1px solid #c9a227;
+  background-color: transparent;
+  color: #c9a227;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.6875rem 1.5rem;
+  transition: background-color 0.16s ease, transform 0.16s ease;
+}
+.btn-outline-gold:hover {
+  transform: translateY(-1px);
+  background-color: rgba(201, 162, 39, 0.08);
+}
+
+/* Standard fan-app content card (off-white page, white card, hairline border) */
+.ekhaya-card {
+  border-radius: 1rem;
+  border: 1px solid #e7e2d6;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(22, 22, 22, 0.04), 0 8px 20px -16px rgba(22, 22, 22, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.ekhaya-card:hover {
+  transform: translateY(-4px);
+  border-color: #c9a227;
+  box-shadow: 0 2px 6px rgba(22, 22, 22, 0.05), 0 20px 40px -20px rgba(138, 109, 29, 0.35);
+}
+
+/* Small uppercase label — grey section kicker like the fan app */
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+.eyebrow-gold {
+  color: #c9a227;
+}
+
+/* Gold pill badge (tier badges, category chips) */
+.gold-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  background-color: #c9a227;
+  color: #161616;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1rem;
+  padding: 0.25rem 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+/* Segmented underline tabs — the fan app's signature tab row */
+.ekhaya-tab-row {
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1px solid #e7e2d6;
+}
+.ekhaya-tab {
+  flex: 1;
+  text-align: center;
+  padding: 0.9rem 0.5rem;
+  font-weight: 600;
+  color: #8a8a8a;
+  font-size: 0.8125rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+.ekhaya-tab:hover {
+  color: #161616;
+}
+.ekhaya-tab-active {
+  color: #161616;
+  border-bottom-color: #c9a227;
+}
+
+/* Dark ink scoreboard — match-centre hero panel */
+.scoreboard {
+  background-color: #161616;
+  color: #fff;
+  border-bottom: 1px solid rgba(231, 206, 122, 0.35);
+}
+.scoreboard .score-team {
+  color: #fff;
+  font-weight: 600;
+}
+.scoreboard .score-gold {
+  color: #c9a227;
+  font-family: var(--font-oswald);
+  font-weight: 600;
+}
+.scoreboard .score-meta {
+  color: #e7ce7a;
+}
+
+/* Status pills (live / W / D / L) */
+.status-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  background-color: #c0392b;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.status-w {
+  border-radius: 0.375rem;
+  background-color: #f6efd1;
+  color: #8a6d1d;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+}
+.status-d {
+  border-radius: 0.375rem;
+  background-color: #ececea;
+  color: #6b6b6b;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+}
+.status-l {
+  border-radius: 0.375rem;
+  background-color: #fbeceb;
+  color: #c0392b;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+}
+
+/* Gold gradient headline text */
+.text-gold-gradient {
+  background-image: linear-gradient(115deg, #a3801f 0%, #e8cf78 45%, #c9a227 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Light hero surface (admin section, light sections) */
+.brand-hero {
+  position: relative;
+  background-image: linear-gradient(180deg, #ffffff 0%, #fbf6e6 100%);
+  border-bottom: 1px solid #eddfa8;
+}
+
+/* Dark premium hero — the fan-app splash/scoreboard look. Ink surface washed
+   with a gold glow and the crest as a subtle watermark. */
+.brand-hero-dark {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background-color: #161616;
+  background-image:
+    radial-gradient(90% 130% at 12% -10%, rgba(201, 162, 39, 0.22) 0%, rgba(201, 162, 39, 0) 55%),
+    radial-gradient(70% 110% at 100% 115%, rgba(201, 162, 39, 0.1) 0%, rgba(201, 162, 39, 0) 55%),
+    url('/branding/ekhaya-logo.jpg');
+  background-position: center, center, calc(100% + 40px) center;
+  background-size: auto, auto, 480px 480px;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.4);
+}
+.brand-hero-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 55%,
+    rgba(201, 162, 39, 0.06) 55%,
+    transparent 72%
+  );
+  pointer-events: none;
+}
+
+/* Gold duplicate of .brand-hero set used on team sub-pages */
+
+/* Fade-in on scroll for sections (JS-free: gentle initial entrance) */
+@keyframes ekhaya-fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ekhaya-fade {
+  animation: ekhaya-fade 0.6s ease-out both;
+}
+.ekhaya-fade-delay-1 {
+  animation-delay: 0.08s;
+}
+.ekhaya-fade-delay-2 {
+  animation-delay: 0.16s;
+}
+.ekhaya-fade-delay-3 {
+  animation-delay: 0.24s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ekhaya-fade {
+    animation: none;
+  }
+}
+
+/* Pulsing gold "live" dot */
+.live-dot {
+  position: relative;
+  display: inline-flex;
+  width: 0.5rem;
+  height: 0.5rem;
+}
+.live-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: #c9a227;
+  animation: live-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: #e9cc70;
+}
+@keyframes live-ping {
+  75%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Mobile bottom tab bar — the signature club-app navigation */
+@keyframes ekhaya-tab-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.app-tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: stretch;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-top: 1px solid #e7e2d6;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -8px 24px -16px rgba(22, 22, 22, 0.18);
+  animation: ekhaya-tab-in 0.35s ease-out;
+}
+.app-tabbar a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-top: 0.55rem;
+  padding-bottom: 0.4rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #8a8a8a;
+  transition: color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.app-tabbar a svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+.app-tabbar a.active {
+  color: #c9a227;
+}
+.app-tabbar a.active svg {
+  filter: drop-shadow(0 2px 5px rgba(201, 162, 39, 0.45));
+}
+
+/* Fan-app hairline list/dividers */
+.hairline {
+  border-color: #e7e2d6;
 }

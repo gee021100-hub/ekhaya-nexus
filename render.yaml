@@ -11,7 +11,7 @@ services:
       - key: NEXT_PUBLIC_APP_URL
         value: https://ekhaya-all-in-one-2.onrender.com
       - key: APP_NAME
-        value: EKHAYA ALL-IN-ONE
+        value: EKHAYA APP
       - key: NODE_VERSION
         value: "22"
       - key: NEXT_PUBLIC_SUPABASE_URL

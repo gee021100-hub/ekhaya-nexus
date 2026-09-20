@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTeamBySlug, getPlayer } from '@/lib/data';
 import { TEAMS } from '@/types';
+import { PageHero } from '@/components/brand/hero';
 
 export async function generateStaticParams() {
   return TEAMS.map((t) => ({ team: t.slug }));
@@ -26,6 +27,7 @@ export default async function PlayerProfilePage({ params }: { params: Promise<{ 
   if (!player || player.team_id !== team.id) notFound();
 
   const fields = [
+    { label: 'Squad Number', value: player.number != null ? `#${player.number}` : null },
     { label: 'Position', value: player.position },
     { label: 'Strong Foot', value: player.strong_foot },
     { label: 'Age', value: player.age != null ? String(player.age) : null },
@@ -35,37 +37,34 @@ export default async function PlayerProfilePage({ params }: { params: Promise<{ 
 
   return (
     <div>
-      <div className="border-b border-slate-200 bg-club-green-700 px-4 py-8 text-white sm:py-12">
-        <div className="mx-auto max-w-7xl">
-          <nav className="mb-2 text-sm text-white/60">
-            <Link href={`/${slug}`} className="hover:text-white transition-colors">
-              {config.name}
-            </Link>
-            <span className="mx-2">/</span>
-            <Link href={`/${slug}/players`} className="hover:text-white transition-colors">
-              Players
-            </Link>
-          </nav>
-          <h1 className="text-3xl font-black tracking-tight">{player.name}</h1>
-        </div>
-      </div>
+      <PageHero eyebrow="Ekhaya FC" title={player.name}>
+        <nav className="mt-2 flex items-center gap-1.5 text-sm text-slate-300">
+          <Link href={`/${slug}`} className="font-medium text-club-gold-300 hover:underline">
+            {config.name}
+          </Link>
+          <span>/</span>
+          <Link href={`/${slug}/players`} className="font-medium text-club-gold-300 hover:underline">
+            Players
+          </Link>
+        </nav>
+      </PageHero>
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border bg-white p-8 shadow-sm">
+        <div className="ekhaya-card p-8">
           <div className="flex items-center gap-6">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-club-green-100 text-3xl font-bold text-club-green-700">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-club-gold-100 text-3xl font-bold text-club-gold-700">
               {player.name.charAt(0)}
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-900">{player.name}</h2>
-              <p className="text-sm text-slate-500">{config.name}</p>
+              <h2 className="font-display text-3xl font-semibold uppercase tracking-wide text-club-ink">{player.name}</h2>
+              <p className="text-sm uppercase tracking-wide text-[#8a8a8a]">{config.name}</p>
             </div>
           </div>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
             {fields.map((field) => (
-              <div key={field.label} className="rounded-xl bg-slate-50 p-4">
-                <p className="text-xs font-semibold uppercase text-slate-500">{field.label}</p>
-                <p className="mt-1 text-lg font-bold text-slate-900">
+              <div key={field.label} className="rounded-xl border border-club-border bg-[#FFFDF7] p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-[#8a8a8a]">{field.label}</p>
+                <p className="font-display mt-1 text-xl font-semibold text-club-ink">
                   {field.value ?? '\u2014'}
                 </p>
               </div>

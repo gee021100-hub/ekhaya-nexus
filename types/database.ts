@@ -1,5 +1,5 @@
 /**
- * Database types for Ekhaya All-in-One.
+ * Database types for Ekhaya App.
  * Run `pnpm db:types` after connecting a database to regenerate.
  */
 
@@ -28,6 +28,7 @@ export interface Database {
           id: string;
           team_id: string;
           name: string;
+          number: number | null;
           strong_foot: string | null;
           age: number | null;
           position: string | null;
@@ -188,9 +189,63 @@ export interface Database {
           created_at: string;
         };
       };
+      announcements: {
+        Row: {
+          id: string;
+          title: string;
+          body: string | null;
+          type: string;
+          published_at: string;
+          is_pinned: boolean;
+          enabled: boolean;
+          created_at: string;
+        };
+      };
+      sponsors: {
+        Row: {
+          id: string;
+          name: string;
+          level: string;
+          website: string | null;
+          logo_url: string | null;
+          description: string | null;
+          sort_order: number;
+          enabled: boolean;
+          created_at: string;
+        };
+      };
+      site_settings: {
+        Row: {
+          key: string;
+          value: string | null;
+          updated_at: string;
+        };
+      };
+      contact_messages: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          subject: string | null;
+          message: string;
+          status: 'new' | 'read' | 'archived';
+          created_at: string;
+        };
+      };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      book_tickets: {
+        Args: {
+          p_allocation_id: string;
+          p_full_name: string;
+          p_email: string;
+          p_phone: string | null;
+          p_quantity: number;
+        };
+        Returns: Json;
+      };
+    };
     Enums: Record<string, never>;
   };
 }

@@ -1,7 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { createClient, supabaseConfigured } from '@/lib/supabase/server';
+import { SITE_SETTING_FIELDS } from '@/types';
 
 export interface ActionResult {
   success: boolean;
@@ -237,4 +239,562 @@ export async function createTrainingAllocation(
     '/admin/training',
     'Training allocation',
   );
+}
+
+/* ------------------------------------------------------------------ */
+/*  News & announcements                                               */
+/* ------------------------------------------------------------------ */
+
+export async function createNewsArticle(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const title = String(formData.get('title') ?? '').trim();
+  const content = String(formData.get('content') ?? '').trim();
+  if (!title || !content) {
+    return { success: false, message: 'Please provide a news title and content.' };
+  }
+  const article = {
+    title,
+    summary: String(formData.get('summary') ?? '').trim() || null,
+    content,
+    category: String(formData.get('category') ?? '').trim() || 'News',
+    published_at:
+      String(formData.get('published_at') ?? '') ||
+      new Date().toISOString(),
+  };
+  return persist(
+    () => performInsert('news_articles', article),
+    '/admin/news',
+    'News article',
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Match media & highlights                                           */
+/* ------------------------------------------------------------------ */
+
+export async function createMediaItem(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const title = String(formData.get('title') ?? '').trim();
+  const url = String(formData.get('url') ?? '').trim();
+  const media_type = formData.get('media_type');
+  if (!title) {
+    return { success: false, message: 'Please provide a media title.' };
+  }
+
+  let finalUrl = url;
+
+  const file = formData.get('file');
+  if (file instanceof File && file.size > 0) {
+    if (!supabaseConfigured()) {
+      return {
+        success: false,
+        message:
+          'Database not connected. Add the Supabase environment variables to upload media files.',
+      };
+    }
+    const supabase = await createClient();
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const path = `media/${crypto.randomUUID()}.${ext}`;
+    const { error: uploadError } = await supabase.storage
+      .from('ekhaya-media')
+      .upload(path, file, { upsert: false, contentType: file.type });
+    if (uploadError) {
+      return { success: false, message: 'Could not upload the media file. Please try again.' };
+    }
+    finalUrl = supabase.storage.from('ekhaya-media').getPublicUrl(path).data.publicUrl;
+  }
+
+  if (!finalUrl) {
+    return { success: false, message: 'Please provide a media URL or upload a file.' };
+  }
+
+  const item = {
+    title,
+    media_type: media_type === 'photo' || media_type === 'highlight' ? media_type : ('video' as const),
+    url: finalUrl,
+    thumbnail_url: String(formData.get('thumbnail_url') ?? '').trim() || null,
+    published_at:
+      String(formData.get('published_at') ?? '') ||
+      new Date().toISOString(),
+  };
+  return persist(
+    () => performInsert('media_items', item),
+    '/admin/media',
+    'Media item',
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Authentication (Supabase Auth)                                     */
+/* ------------------------------------------------------------------ */
+
+export async function signInAdmin(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  if (!supabaseConfigured()) {
+    return {
+      success: false,
+      message:
+        'Database not connected. Add the Supabase environment variables to enable staff sign-in.',
+    };
+  }
+  const email = String(formData.get('email') ?? '').trim();
+  const password = String(formData.get('password') ?? '');
+  if (!email || !password) {
+    return { success: false, message: 'Please provide your email and password.' };
+  }
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    return { success: false, message: 'Invalid email or password.' };
+  }
+  // The sign-in form navigates client-side once the session cookie is set;
+  // navigate via window.location so the auth middleware always gets the
+  // full request (redirect() inside the action can drop under prefetch load).
+  return { success: true, message: 'Signed in. Opening the dashboard…' };
+}
+
+export async function signOutAdmin(): Promise<void> {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  revalidatePath('/admin/login');
+  redirect('/admin/login');
+}
+
+/* ------------------------------------------------------------------ */
+/*  Ticket allocations                                                 */
+/* ------------------------------------------------------------------ */
+
+export async function createTicketAllocation(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const fixture_id = String(formData.get('fixture_id') ?? '') || null;
+  const category = String(formData.get('category') ?? '').trim();
+  if (!fixture_id || !category) {
+    return {
+      success: false,
+      message: 'Please provide the fixture and a ticket category.',
+    };
+  }
+  const allocation = {
+    fixture_id,
+    category,
+    price: formData.get('price') ? Number(formData.get('price')) || 0 : 0,
+    capacity: formData.get('capacity') ? Number(formData.get('capacity')) || 0 : 0,
+    sold: 0,
+    status: 'available',
+  };
+  return persist(
+    () => performInsert('ticket_allocations', allocation),
+    '/admin/tickets',
+    'Ticket allocation',
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Announcements                                                      */
+/* ------------------------------------------------------------------ */
+
+export async function createAnnouncement(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const title = String(formData.get('title') ?? '').trim();
+  if (!title) {
+    return { success: false, message: 'Please provide an announcement title.' };
+  }
+  const announcement = {
+    title,
+    body: String(formData.get('body') ?? '').trim() || null,
+    type: String(formData.get('type') ?? '').trim() || 'Announcement',
+    is_pinned: formData.get('is_pinned') === 'on',
+    published_at:
+      String(formData.get('published_at') ?? '') || new Date().toISOString(),
+  };
+  return persist(
+    () => performInsert('announcements', announcement),
+    '/admin/announcements',
+    'Announcement',
+  );
+}
+
+export async function deleteAnnouncement(id: string): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid announcement.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('announcements').delete().eq('id', id);
+    },
+    '/admin/announcements',
+    'Announcement deleted.',
+    ['/', '/about'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Sponsors & partners                                                */
+/* ------------------------------------------------------------------ */
+
+export async function createSponsor(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const name = String(formData.get('name') ?? '').trim();
+  if (!name) {
+    return { success: false, message: 'Please provide the sponsor name.' };
+  }
+  const sponsor = {
+    name,
+    level: String(formData.get('level') ?? '').trim() || 'Official Partner',
+    website: String(formData.get('website') ?? '').trim() || null,
+    logo_url: String(formData.get('logo_url') ?? '').trim() || null,
+    description: String(formData.get('description') ?? '').trim() || null,
+    sort_order: formData.get('sort_order') ? Number(formData.get('sort_order')) || 0 : 0,
+    enabled: true,
+  };
+  return persist(
+    () => performInsert('sponsors', sponsor),
+    '/admin/sponsors',
+    'Sponsor',
+  );
+}
+
+export async function deleteSponsor(id: string): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid sponsor.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('sponsors').delete().eq('id', id);
+    },
+    '/admin/sponsors',
+    'Sponsor deleted.',
+    ['/', '/about'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Site settings                                                      */
+/* ------------------------------------------------------------------ */
+
+export async function saveSiteSettings(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const toUpsert: { key: string; value: string }[] = [];
+  const toDelete: string[] = [];
+
+  for (const field of SITE_SETTING_FIELDS) {
+    const value = String(formData.get(field.key) ?? '').trim();
+    if (value) {
+      toUpsert.push({ key: field.key, value });
+    } else {
+      toDelete.push(field.key);
+    }
+  }
+
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      if (toUpsert.length > 0) {
+        const { error } = await supabase.from('site_settings').upsert(toUpsert, {
+          onConflict: 'key',
+        });
+        if (error) return { error };
+      }
+      if (toDelete.length > 0) {
+        const { error } = await supabase
+          .from('site_settings')
+          .delete()
+          .in('key', toDelete);
+        if (error) return { error };
+      }
+      return { error: null };
+    },
+    '/admin/settings',
+    'Site settings saved.',
+    ['/', '/about', '/contact'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Payments (staff reconciliation)                                    */
+/* ------------------------------------------------------------------ */
+
+export async function confirmPayment(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const transactionId = String(formData.get('transaction_id') ?? '').trim();
+  if (!transactionId) {
+    return { success: false, message: 'Invalid payment record.' };
+  }
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.rpc('confirm_payment', {
+        p_transaction_id: transactionId,
+        p_provider_reference: '',
+        p_provider: null,
+      });
+    },
+    '/admin/payments',
+    'Payment confirmed — the booking/membership has been updated.',
+    ['/tickets', '/membership', '/admin/reports'],
+  );
+}
+
+export async function cancelPayment(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const transactionId = String(formData.get('transaction_id') ?? '').trim();
+  if (!transactionId) {
+    return { success: false, message: 'Invalid payment record.' };
+  }
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.rpc('cancel_payment', { p_transaction_id: transactionId });
+    },
+    '/admin/payments',
+    'Payment marked as failed — no funds recorded.',
+    ['/tickets', '/membership'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Official store products                                            */
+/* ------------------------------------------------------------------ */
+
+export async function createStoreProduct(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const name = String(formData.get('name') ?? '').trim();
+  if (!name) {
+    return { success: false, message: 'Please provide a product name.' };
+  }
+  const category = String(formData.get('category') ?? '').trim();
+  const product = {
+    name,
+    category: category || 'Kits',
+    price: formData.get('price') ? Number(formData.get('price')) || 0 : 0,
+    original_price: formData.get('original_price')
+      ? Number(formData.get('original_price')) || null
+      : null,
+    description: String(formData.get('description') ?? '').trim() || null,
+    image_url: String(formData.get('image_url') ?? '').trim() || null,
+    sizes: String(formData.get('sizes') ?? '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean),
+    customizable: formData.get('customizable') === 'on',
+    in_stock: formData.get('in_stock') !== 'off',
+    badge: String(formData.get('badge') ?? '').trim() || null,
+    sort_order: formData.get('sort_order') ? Number(formData.get('sort_order')) || 0 : 0,
+    enabled: formData.get('enabled') !== 'off',
+  };
+  return persist(
+    () => performInsert('store_products', product),
+    '/admin/store',
+    'Store product',
+  );
+}
+
+export async function deleteStoreProduct(id: string): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid product.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('store_products').delete().eq('id', id);
+    },
+    '/admin/store',
+    'Store product deleted.',
+    ['/store'],
+  );
+}
+
+export async function toggleStoreProduct(id: string, enabled: boolean): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid product.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('store_products').update({ enabled }).eq('id', id);
+    },
+    '/admin/store',
+    enabled ? 'Product shown in the store.' : 'Product hidden from the store.',
+    ['/store'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Fan engagement polls                                               */
+/* ------------------------------------------------------------------ */
+
+export async function createFanPoll(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const question = String(formData.get('question') ?? '').trim();
+  const optionsRaw = String(formData.get('options') ?? '').trim();
+  if (!question) {
+    return { success: false, message: 'Please provide a poll question.' };
+  }
+  const options = optionsRaw
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((text, i) => ({ id: `opt-${i + 1}`, text }));
+  if (options.length < 2) {
+    return { success: false, message: 'Please provide at least two answer options, one per line.' };
+  }
+  const poll = {
+    question,
+    category: String(formData.get('category') ?? '').trim() || 'Match Prediction',
+    description: String(formData.get('description') ?? '').trim() || null,
+    options,
+    featured_match: String(formData.get('featured_match') ?? '').trim() || null,
+    active: formData.get('active') === 'on',
+    ends_at: String(formData.get('ends_at') ?? '') || null,
+  };
+  return persist(
+    () => performInsert('fan_polls', poll),
+    '/admin/polls',
+    'Fan poll',
+  );
+}
+
+export async function deleteFanPoll(id: string): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid poll.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('fan_polls').delete().eq('id', id);
+    },
+    '/admin/polls',
+    'Poll deleted.',
+    ['/polls'],
+  );
+}
+
+export async function toggleFanPoll(id: string, active: boolean): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid poll.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('fan_polls').update({ active }).eq('id', id);
+    },
+    '/admin/polls',
+    active ? 'Poll opened for votes.' : 'Poll closed for votes.',
+    ['/polls'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Fan notifications (broadcast tray)                                 */
+/* ------------------------------------------------------------------ */
+
+export async function createFanNotification(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const title = String(formData.get('title') ?? '').trim();
+  const message = String(formData.get('message') ?? '').trim();
+  if (!title || !message) {
+    return { success: false, message: 'Please provide a notification title and message.' };
+  }
+  const notification = {
+    title,
+    message,
+    category: String(formData.get('category') ?? '').trim() || 'news',
+    published_at: new Date().toISOString(),
+    enabled: formData.get('enabled') !== 'off',
+  };
+  return persist(
+    () => performInsert('fan_notifications', notification),
+    '/admin/notifications',
+    'Notification',
+  );
+}
+
+export async function deleteFanNotification(id: string): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid notification.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('fan_notifications').delete().eq('id', id);
+    },
+    '/admin/notifications',
+    'Notification deleted.',
+    ['/admin/notifications'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Store orders (staff follow-up)                                     */
+/* ------------------------------------------------------------------ */
+
+export async function cancelStoreOrder(id: string): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid order.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('store_orders').update({ payment_status: 'cancelled' }).eq('id', id);
+    },
+    '/admin/store',
+    'Order marked as cancelled.',
+    ['/store'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Contact messages                                                   */
+/* ------------------------------------------------------------------ */
+
+export async function markContactMessage(
+  id: string,
+  status: 'new' | 'read' | 'archived',
+): Promise<ActionResult> {
+  if (!id) return { success: false, message: 'Invalid message.' };
+  return mutate(
+    async () => {
+      const supabase = await createClient();
+      return supabase.from('contact_messages').update({ status }).eq('id', id);
+    },
+    '/admin/messages',
+    'Message updated.',
+    ['/admin/messages'],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Generic mutation helper (insert/update/delete with fallback guard) */
+/* ------------------------------------------------------------------ */
+
+async function mutate(
+  run: () => Promise<{ error: { message: string } | null }>,
+  path: string,
+  successMessage: string,
+  extraPaths: string[] = [],
+): Promise<ActionResult> {
+  if (!supabaseConfigured()) {
+    return {
+      success: false,
+      message:
+        'Database not connected. Add the Supabase environment variables to save changes.',
+    };
+  }
+  const { error } = await run();
+  if (error) {
+    return { success: false, message: 'Could not save the change. Please try again.' };
+  }
+  revalidatePath(path);
+  for (const extra of extraPaths) revalidatePath(extra);
+  return { success: true, message: successMessage };
 }

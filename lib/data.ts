@@ -14,6 +14,22 @@ import type {
   PettyCashTransaction,
   StaffAllowance,
   TrainingAllocation,
+  NewsArticle,
+  MediaItem,
+  TicketAllocation,
+  TicketBooking,
+  Membership,
+  Announcement,
+  Sponsor,
+  SiteSettings,
+  ContactMessage,
+  PaymentTransaction,
+  AppEvent,
+  StoreProduct,
+  StoreOrder,
+  FanPoll,
+  FanNotification,
+  PollVoteRow,
 } from '@/types';
 
 /* ------------------------------------------------------------------ */
@@ -36,15 +52,38 @@ const SEED_COMPETITIONS: Competition[] = [
 ];
 
 const SEED_PLAYERS: Player[] = [
-  { id: 'c1000000-0000-0000-0000-000000000001', team_id: SENIOR_ID, name: 'Allen Chihana', strong_foot: null, age: null, position: null, goals: 6, assists: 1, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000002', team_id: SENIOR_ID, name: 'Blessings Malinda', strong_foot: null, age: null, position: null, goals: 5, assists: 2, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000003', team_id: SENIOR_ID, name: 'Chimwemwe Chunga', strong_foot: null, age: null, position: null, goals: 4, assists: 1, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000004', team_id: SENIOR_ID, name: 'James Lumbe', strong_foot: null, age: null, position: null, goals: 2, assists: 1, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000005', team_id: SENIOR_ID, name: 'Levison Mnyenyembe', strong_foot: null, age: null, position: null, goals: 1, assists: 4, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000006', team_id: SENIOR_ID, name: 'James Stambuli', strong_foot: null, age: null, position: null, goals: 1, assists: 1, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000007', team_id: SENIOR_ID, name: 'Charles Mafaiti', strong_foot: null, age: null, position: null, goals: 1, assists: null, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000008', team_id: SENIOR_ID, name: 'Samuel Rukura', strong_foot: null, age: null, position: null, goals: null, assists: 2, created_at: '2026-01-01T00:00:00Z' },
-  { id: 'c1000000-0000-0000-0000-000000000009', team_id: SENIOR_ID, name: 'Isaiah Nyirenda', strong_foot: null, age: null, position: null, goals: null, assists: 2, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000024', team_id: SENIOR_ID, name: 'Amos Sande', number: 1, strong_foot: null, age: null, position: 'GK', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000012', team_id: SENIOR_ID, name: 'Vincent Salawira', number: 4, strong_foot: null, age: null, position: 'CDM', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000015', team_id: SENIOR_ID, name: 'Aubrey Simbi', number: 5, strong_foot: null, age: null, position: 'CB/RB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000028', team_id: SENIOR_ID, name: 'Hadji James', number: 6, strong_foot: null, age: null, position: 'CDM', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000009', team_id: SENIOR_ID, name: 'Isaiah Nyirenda', number: 7, strong_foot: null, age: null, position: 'B2B/CAM', goals: null, assists: 2, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000018', team_id: SENIOR_ID, name: 'Moses Banda', number: 8, strong_foot: null, age: null, position: 'CDM', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000006', team_id: SENIOR_ID, name: 'James Stambuli', number: 9, strong_foot: null, age: null, position: 'CF/CAM', goals: 1, assists: 1, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000003', team_id: SENIOR_ID, name: 'Chimwemwe Chunga', number: 11, strong_foot: null, age: null, position: 'RW', goals: 4, assists: 1, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000023', team_id: SENIOR_ID, name: 'Alick Lungu', number: 12, strong_foot: null, age: null, position: 'LB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000011', team_id: SENIOR_ID, name: 'Andrew Lameck', number: 14, strong_foot: null, age: null, position: 'CB/CDM', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000029', team_id: SENIOR_ID, name: 'Joseph Saiwa', number: 16, strong_foot: null, age: null, position: 'CB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000013', team_id: SENIOR_ID, name: 'Hermas Masinja', number: 17, strong_foot: null, age: null, position: 'RB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000014', team_id: SENIOR_ID, name: 'Happy Mphepo', number: 19, strong_foot: null, age: null, position: 'CB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000001', team_id: SENIOR_ID, name: 'Allen Chihana', number: 20, strong_foot: null, age: null, position: 'RW/LW/CF/CAM', goals: 6, assists: 1, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000007', team_id: SENIOR_ID, name: 'Charles Mafaiti', number: 21, strong_foot: null, age: null, position: 'CB', goals: 1, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000004', team_id: SENIOR_ID, name: 'James Lumbe', number: 25, strong_foot: null, age: null, position: 'LW/RW/CAM', goals: 2, assists: 1, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000017', team_id: SENIOR_ID, name: 'Joseph McDonald', number: 26, strong_foot: null, age: null, position: 'CB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000008', team_id: SENIOR_ID, name: 'Samuel Rukura', number: 29, strong_foot: null, age: null, position: 'LW/LB', goals: null, assists: 2, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000010', team_id: SENIOR_ID, name: 'Clever Mkungula', number: 31, strong_foot: null, age: null, position: 'GK', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000002', team_id: SENIOR_ID, name: 'Blessings Malinda', number: 47, strong_foot: null, age: null, position: 'CAM/B2B', goals: 5, assists: 2, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000005', team_id: SENIOR_ID, name: 'Levison Mnyenyembe', number: 98, strong_foot: null, age: null, position: 'LW/RW', goals: 1, assists: 4, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000030', team_id: SENIOR_ID, name: 'Joshua Waka', number: 99, strong_foot: null, age: null, position: 'GK', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000016', team_id: SENIOR_ID, name: 'Gift Chunga', number: null, strong_foot: null, age: null, position: 'CF', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000019', team_id: SENIOR_ID, name: 'Lucky Tizola', number: null, strong_foot: null, age: null, position: 'GK', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000020', team_id: SENIOR_ID, name: 'Wongani Kaponya', number: null, strong_foot: null, age: null, position: 'LW/RW', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000021', team_id: SENIOR_ID, name: 'Fanizo Mwansambo', number: null, strong_foot: null, age: null, position: 'CB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000022', team_id: SENIOR_ID, name: 'Alfred Chizinga', number: null, strong_foot: null, age: null, position: 'CAM/CF', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000025', team_id: SENIOR_ID, name: 'Davie Juao', number: null, strong_foot: null, age: null, position: 'CF', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000026', team_id: SENIOR_ID, name: 'George Mateyo', number: null, strong_foot: null, age: null, position: 'RW', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000027', team_id: SENIOR_ID, name: 'Gift Magola', number: null, strong_foot: null, age: null, position: 'RW', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000031', team_id: SENIOR_ID, name: 'Limbani Kutambe', number: null, strong_foot: null, age: null, position: 'CDM', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
+  { id: 'c1000000-0000-0000-0000-000000000032', team_id: SENIOR_ID, name: 'Mudrick Salomu', number: null, strong_foot: null, age: null, position: 'CB', goals: null, assists: null, created_at: '2026-01-01T00:00:00Z' },
 ];
 
 const SEED_STANDINGS: Standing[] = [
@@ -95,7 +134,7 @@ const SEED_RESULTS: Result[] = [
   { id: 'f1000000-0000-0000-0000-000000000008', team_id: SENIOR_ID, home_team: 'Ekhaya', away_team: 'MAFCO', home_score: 1, away_score: 0, match_date: '2026-06-28', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
   { id: 'f1000000-0000-0000-0000-000000000009', team_id: SENIOR_ID, home_team: 'Mighty Wanderers', away_team: 'Ekhaya', home_score: 1, away_score: 1, match_date: '2026-06-20', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
   { id: 'f1000000-0000-0000-0000-000000000010', team_id: SENIOR_ID, home_team: 'Ekhaya', away_team: 'Masters FC', home_score: 2, away_score: 0, match_date: '2026-05-30', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
-  { id: 'f1000000-0000-0000-0000-000000000011', team_id: SENIOR_ID, home_team: 'Kamuzu Barracks', away_team: 'Ekhaya', home_score: 4, away_score: 1, match_date: '2026-05-23', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
+  { id: 'f1000000-0000-0000-0000-000000000011', team_id: SENIOR_ID, home_team: 'Kamuzu Barracks', away_team: 'Ekhaya', home_score: 1, away_score: 4, match_date: '2026-05-23', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
   { id: 'f1000000-0000-0000-0000-000000000012', team_id: SENIOR_ID, home_team: 'Ekhaya', away_team: 'Moyale Barracks', home_score: 2, away_score: 0, match_date: '2026-05-16', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
   { id: 'f1000000-0000-0000-0000-000000000013', team_id: SENIOR_ID, home_team: 'Civo Utd', away_team: 'Ekhaya', home_score: 1, away_score: 0, match_date: '2026-05-09', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
   { id: 'f1000000-0000-0000-0000-000000000014', team_id: SENIOR_ID, home_team: 'Ekhaya', away_team: 'Red Lions', home_score: 1, away_score: 1, match_date: '2026-05-02', match_time: '14:30:00', competition_id: 'b1000000-0000-0000-0000-000000000001', competition_name: 'FDH Championship', created_at: '2026-01-01T00:00:00Z' },
@@ -128,6 +167,38 @@ const SEED_WEEKLY_BUDGETS: WeeklyBudget[] = [];
 const SEED_PETTY_CASH: PettyCashTransaction[] = [];
 const SEED_STAFF_ALLOWANCES: StaffAllowance[] = [];
 const SEED_TRAINING_ALLOCATIONS: TrainingAllocation[] = [];
+
+// The digital modules (news, media, tickets, memberships) start empty. No real
+// articles, media, ticket runs or members have been provided — club staff and
+// fans create records through the app forms, which persist via Supabase.
+const SEED_NEWS_ARTICLES: NewsArticle[] = [];
+const SEED_MEDIA_ITEMS: MediaItem[] = [];
+const SEED_TICKET_ALLOCATIONS: TicketAllocation[] = [];
+const SEED_TICKET_BOOKINGS: TicketBooking[] = [];
+const SEED_MEMBERSHIPS: Membership[] = [];
+
+// Club content is staff-managed; nothing is published until an admin adds it.
+const SEED_ANNOUNCEMENTS: Announcement[] = [];
+const SEED_SPONSORS: Sponsor[] = [];
+const SEED_CONTACT_MESSAGES: ContactMessage[] = [];
+
+// Default site settings. Only the club email already present in the app is
+// included; everything else stays empty until staff fill it in /admin/settings.
+const SEED_SITE_SETTINGS: SiteSettings = {
+  contact_email: 'info@ekhaya-fc.mw',
+  contact_phone: null,
+  contact_address: null,
+  stadium_name: null,
+  ticket_office: null,
+  facebook: null,
+  instagram: null,
+  x_handle: null,
+  tiktok: null,
+  about_blurb: null,
+  payment_to_mpamba: null,
+  payment_to_airtel: null,
+  payment_instructions: null,
+};
 
 /* ------------------------------------------------------------------ */
 /*  Supabase queries                                                   */
@@ -268,6 +339,180 @@ async function dbGetTrainingAllocations(): Promise<TrainingAllocation[]> {
   return (data as TrainingAllocation[]) ?? [];
 }
 
+async function dbGetNewsArticles(): Promise<NewsArticle[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('news_articles')
+    .select('*')
+    .order('published_at', { ascending: false });
+  return (data as NewsArticle[]) ?? [];
+}
+
+async function dbGetNewsArticle(id: string): Promise<NewsArticle | null> {
+  const supabase = await createClient();
+  const { data } = await supabase.from('news_articles').select('*').eq('id', id).maybeSingle();
+  return (data as NewsArticle | null) ?? null;
+}
+
+async function dbGetMediaItems(): Promise<MediaItem[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('media_items')
+    .select('*')
+    .order('published_at', { ascending: false });
+  return (data as MediaItem[]) ?? [];
+}
+
+async function dbGetStoreProducts(): Promise<StoreProduct[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('store_products')
+    .select('*')
+    .order('sort_order', { ascending: true });
+  return (data as StoreProduct[]) ?? [];
+}
+
+async function dbGetStoreOrders(): Promise<StoreOrder[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('store_orders')
+    .select('*')
+    .order('created_at', { ascending: false });
+  return (data as StoreOrder[]) ?? [];
+}
+
+async function dbGetFanPolls(): Promise<FanPoll[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('fan_polls')
+    .select('*')
+    .order('created_at', { ascending: false });
+  return (data as FanPoll[]) ?? [];
+}
+
+async function dbGetFanNotifications(): Promise<FanNotification[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('fan_notifications')
+    .select('*')
+    .order('published_at', { ascending: false });
+  return (data as FanNotification[]) ?? [];
+}
+
+async function dbGetPollResults(pollId: string): Promise<PollVoteRow[]> {
+  const supabase = await createClient();
+  const { data } = await supabase.rpc('get_poll_results', { p_poll_id: pollId });
+  return (data as PollVoteRow[]) ?? [];
+}
+
+async function dbGetTicketAllocations(): Promise<TicketAllocation[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('ticket_allocations')
+    .select('*, fixtures(home_team, away_team, match_date)')
+    .order('created_at', { ascending: false });
+  if (!data) return [];
+  return data.map((row: Record<string, unknown>) => {
+    const fixture = row.fixtures as {
+      home_team: string;
+      away_team: string;
+      match_date: string;
+    } | null;
+    return {
+      ...(row as unknown as TicketAllocation),
+      home_team: fixture?.home_team ?? null,
+      away_team: fixture?.away_team ?? null,
+      match_date: fixture?.match_date ?? null,
+      fixture_name:
+        fixture ? `${fixture.home_team} vs ${fixture.away_team}` : 'General admission',
+    };
+  }) as TicketAllocation[];
+}
+
+async function dbGetTicketBookings(): Promise<TicketBooking[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('ticket_bookings')
+    .select('*')
+    .order('booking_date', { ascending: false });
+  return (data as TicketBooking[]) ?? [];
+}
+
+async function dbGetMemberships(): Promise<Membership[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('memberships')
+    .select('*')
+    .order('joined_at', { ascending: false });
+  return (data as Membership[]) ?? [];
+}
+
+async function dbGetAnnouncements(): Promise<Announcement[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('announcements')
+    .select('*')
+    .eq('enabled', true)
+    .order('is_pinned', { ascending: false })
+    .order('published_at', { ascending: false });
+  return (data as Announcement[]) ?? [];
+}
+
+async function dbGetSponsors(): Promise<Sponsor[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('sponsors')
+    .select('*')
+    .eq('enabled', true)
+    .order('sort_order')
+    .order('name');
+  return (data as Sponsor[]) ?? [];
+}
+
+async function dbGetSiteSettings(): Promise<SiteSettings> {
+  const supabase = await createClient();
+  const { data } = await supabase.from('site_settings').select('key, value');
+  const defaults: SiteSettings = {
+    contact_email: null,
+    contact_phone: null,
+    contact_address: null,
+    stadium_name: null,
+    ticket_office: null,
+    facebook: null,
+    instagram: null,
+    x_handle: null,
+    tiktok: null,
+    about_blurb: null,
+    payment_to_mpamba: null,
+    payment_to_airtel: null,
+    payment_instructions: null,
+  };
+  if (!data) return defaults;
+  for (const row of data) {
+    const key = row.key as keyof SiteSettings;
+    if (key in defaults) defaults[key] = row.value;
+  }
+  return defaults;
+}
+
+async function dbGetContactMessages(): Promise<ContactMessage[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('contact_messages')
+    .select('*')
+    .order('created_at', { ascending: false });
+  return (data as ContactMessage[]) ?? [];
+}
+
+async function dbGetPaymentTransactions(): Promise<PaymentTransaction[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('payment_transactions')
+    .select('*')
+    .order('created_at', { ascending: false });
+  return (data as PaymentTransaction[]) ?? [];
+}
+
 /* ------------------------------------------------------------------ */
 /*  Public API — tries Supabase, falls back to in-memory seed          */
 /* ------------------------------------------------------------------ */
@@ -345,4 +590,115 @@ export async function getStaffAllowances(): Promise<StaffAllowance[]> {
 export async function getTrainingAllocations(): Promise<TrainingAllocation[]> {
   if (!supabaseConfigured()) return SEED_TRAINING_ALLOCATIONS;
   return dbGetTrainingAllocations();
+}
+
+export async function getNewsArticles(): Promise<NewsArticle[]> {
+  if (!supabaseConfigured()) return SEED_NEWS_ARTICLES;
+  return dbGetNewsArticles();
+}
+
+export async function getNewsArticle(id: string): Promise<NewsArticle | null> {
+  if (!supabaseConfigured()) {
+    return SEED_NEWS_ARTICLES.find((a) => a.id === id) ?? null;
+  }
+  return dbGetNewsArticle(id);
+}
+
+export async function getMediaItems(): Promise<MediaItem[]> {
+  if (!supabaseConfigured()) return SEED_MEDIA_ITEMS;
+  return dbGetMediaItems();
+}
+
+export async function getStoreProducts(): Promise<StoreProduct[]> {
+  // Staff-managed catalogue: starts empty, entered through /admin/store.
+  if (!supabaseConfigured()) return [];
+  return dbGetStoreProducts();
+}
+
+export async function getStoreOrders(): Promise<StoreOrder[]> {
+  if (!supabaseConfigured()) return [];
+  return dbGetStoreOrders();
+}
+
+export async function getFanPolls(): Promise<FanPoll[]> {
+  // Staff-authored engagement polls: starts empty until published via /admin/polls.
+  if (!supabaseConfigured()) return [];
+  return dbGetFanPolls();
+}
+
+export async function getFanNotifications(): Promise<FanNotification[]> {
+  if (!supabaseConfigured()) return [];
+  return dbGetFanNotifications();
+}
+
+export async function getPollResults(pollId: string): Promise<PollVoteRow[]> {
+  if (!supabaseConfigured()) return [];
+  try {
+    return await dbGetPollResults(pollId);
+  } catch {
+    return [];
+  }
+}
+
+export async function getTicketAllocations(): Promise<TicketAllocation[]> {
+  if (!supabaseConfigured()) return SEED_TICKET_ALLOCATIONS;
+  return dbGetTicketAllocations();
+}
+
+export async function getTicketBookings(): Promise<TicketBooking[]> {
+  if (!supabaseConfigured()) return SEED_TICKET_BOOKINGS;
+  return dbGetTicketBookings();
+}
+
+export async function getMemberships(): Promise<Membership[]> {
+  if (!supabaseConfigured()) return SEED_MEMBERSHIPS;
+  return dbGetMemberships();
+}
+
+export async function getAnnouncements(): Promise<Announcement[]> {
+  if (!supabaseConfigured()) return SEED_ANNOUNCEMENTS;
+  return dbGetAnnouncements();
+}
+
+export async function getSponsors(): Promise<Sponsor[]> {
+  if (!supabaseConfigured()) return SEED_SPONSORS;
+  return dbGetSponsors();
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  if (!supabaseConfigured()) return SEED_SITE_SETTINGS;
+  return dbGetSiteSettings();
+}
+
+export async function getContactMessages(): Promise<ContactMessage[]> {
+  if (!supabaseConfigured()) return SEED_CONTACT_MESSAGES;
+  return dbGetContactMessages();
+}
+
+export async function getPaymentTransactions(): Promise<PaymentTransaction[]> {
+  // Payments start empty; staff reconcile them in the admin Payments module.
+  if (!supabaseConfigured()) return [];
+  return dbGetPaymentTransactions();
+}
+
+/**
+ * Most recent diagnostic events (errors/warnings) for the admin dashboard.
+ * Reads go through the signed-in staff session (RLS authenticated read on
+ * app_events). Returns an empty list when observability isn't wired yet so the
+ * dashboard never breaks.
+ */
+export async function getRecentAppEvents(limit = 12): Promise<AppEvent[]> {
+  if (!supabaseConfigured()) return [];
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('app_events')
+      .select('id, level, scope, message, stack, data, path, created_at')
+      .order('created_at', { ascending: false })
+      .limit(limit);
+    if (error) return [];
+    return (data ?? []) as unknown as AppEvent[];
+  } catch {
+    return [];
+  }
 }

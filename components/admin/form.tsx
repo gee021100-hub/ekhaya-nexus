@@ -2,7 +2,7 @@ import type { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes,
 import { cn } from '@/lib/utils';
 
 const inputClass =
-  'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-club-green-600 focus:outline-none focus:ring-1 focus:ring-club-green-600';
+  'w-full rounded-lg border border-club-border bg-white px-3 py-2 text-sm text-[#161616] placeholder-slate-400 transition-shadow focus:border-club-gold-500 focus:outline-none focus:ring-2 focus:ring-club-gold-200';
 
 export function Field({
   label,
@@ -48,7 +48,7 @@ export function SubmitButton({
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex items-center justify-center rounded-lg bg-club-green-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-club-green-600 disabled:cursor-not-allowed disabled:opacity-60"
+      className="inline-flex items-center justify-center rounded-lg bg-club-gold px-4 py-2 text-sm font-semibold text-club-ink shadow-sm transition-all hover:bg-club-gold-400 hover:shadow disabled:cursor-not-allowed disabled:opacity-60"
     >
       {pending ? pendingLabel : label}
     </button>

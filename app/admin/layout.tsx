@@ -1,23 +1,51 @@
 import Link from 'next/link';
 import { AdminNav } from '@/components/admin/admin-nav';
+import { createClient, supabaseConfigured } from '@/lib/supabase/server';
+import { signOutAdmin } from '@/app/admin/actions';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  let userEmail: string | null = null;
+  if (supabaseConfigured()) {
+    const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    userEmail = data.user?.email ?? null;
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
-      <header className="border-b border-slate-200 bg-club-green-700 px-4 py-6 text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
+      <header className="brand-hero px-4 py-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-black tracking-tight">Administration</h1>
-            <p className="text-sm text-white/70">
-              Registrations, transfers, budgets, petty cash, staff and training.
+            <h1 className="text-2xl font-black tracking-tight text-slate-900">Administration</h1>
+            <p className="text-sm text-slate-600">
+              Registrations, transfers, budgets, petty cash, staff, training, news, media, tickets and reports.
             </p>
           </div>
-          <Link
-            href="/"
-            className="rounded-lg bg-white/10 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white/20"
-          >
-            Back to site
-          </Link>
+          <div className="flex shrink-0 items-center gap-3">
+            {userEmail ? (
+              <form action={signOutAdmin}>
+                <button
+                  type="submit"
+                  className="rounded-lg border border-club-gold-300 px-3 py-1.5 text-sm font-semibold text-club-gold-800 transition-colors hover:bg-club-gold-100"
+                >
+                  Sign out · {userEmail}
+                </button>
+              </form>
+            ) : (
+              <Link
+                href="/admin/login"
+                className="rounded-lg border border-club-gold-300 px-3 py-1.5 text-sm font-semibold text-club-gold-800 transition-colors hover:bg-club-gold-100"
+              >
+                Sign in
+              </Link>
+            )}
+            <Link
+              href="/"
+              className="rounded-lg border border-club-gold-300 px-3 py-1.5 text-sm font-semibold text-club-gold-800 transition-colors hover:bg-club-gold-100"
+            >
+              Back to site
+            </Link>
+          </div>
         </div>
       </header>
       <AdminNav />

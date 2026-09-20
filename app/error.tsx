@@ -13,10 +13,10 @@ export default function GlobalError({
     <html lang="en">
       <body className="flex min-h-screen items-center justify-center bg-white px-4">
         <div className="mx-auto max-w-md text-center">
-          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-club-green-100 text-2xl font-black text-club-green-700">
+          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-club-gold-100 font-display text-2xl font-semibold text-club-gold-800">
             EF
           </div>
-          <h1 className="text-3xl font-black tracking-tight text-slate-900">
+          <h1 className="font-display text-3xl font-semibold uppercase tracking-wide text-club-ink">
             Something went wrong
           </h1>
           <p className="mt-3 text-slate-600">

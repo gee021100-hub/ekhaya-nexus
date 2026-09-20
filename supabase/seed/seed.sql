@@ -1,4 +1,4 @@
--- Ekhaya All-in-One: Seed data
+-- Ekhaya App: Seed data
 
 -- Teams
 INSERT INTO teams (id, name, slug, description) VALUES
@@ -13,17 +13,40 @@ INSERT INTO competitions (id, name) VALUES
   ('b1000000-0000-0000-0000-000000000002', 'Airtel Cup'),
   ('b1000000-0000-0000-0000-000000000003', 'Castel Cup');
 
--- Senior Team Players
-INSERT INTO players (id, team_id, name, strong_foot, age, position, goals, assists) VALUES
-  ('c1000000-0000-0000-0000-000000000001', 'a1000000-0000-0000-0000-000000000001', 'Allen Chihana', NULL, NULL, NULL, 6, 1),
-  ('c1000000-0000-0000-0000-000000000002', 'a1000000-0000-0000-0000-000000000001', 'Blessings Malinda', NULL, NULL, NULL, 5, 2),
-  ('c1000000-0000-0000-0000-000000000003', 'a1000000-0000-0000-0000-000000000001', 'Chimwemwe Chunga', NULL, NULL, NULL, 4, 1),
-  ('c1000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000001', 'James Lumbe', NULL, NULL, NULL, 2, 1),
-  ('c1000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000001', 'Levison Mnyenyembe', NULL, NULL, NULL, 1, 4),
-  ('c1000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000001', 'James Stambuli', NULL, NULL, NULL, 1, 1),
-  ('c1000000-0000-0000-0000-000000000007', 'a1000000-0000-0000-0000-000000000001', 'Charles Mafaiti', NULL, NULL, NULL, 1, NULL),
-  ('c1000000-0000-0000-0000-000000000008', 'a1000000-0000-0000-0000-000000000001', 'Samuel Rukura', NULL, NULL, NULL, NULL, 2),
-  ('c1000000-0000-0000-0000-000000000009', 'a1000000-0000-0000-0000-000000000001', 'Isaiah Nyirenda', NULL, NULL, NULL, NULL, 2);
+-- Senior Team Players (full squad with shirt numbers and positions)
+INSERT INTO players (id, team_id, name, number, strong_foot, age, position, goals, assists) VALUES
+  ('c1000000-0000-0000-0000-000000000024', 'a1000000-0000-0000-0000-000000000001', 'Amos Sande', 1, NULL, NULL, 'GK', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000012', 'a1000000-0000-0000-0000-000000000001', 'Vincent Salawira', 4, NULL, NULL, 'CDM', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000015', 'a1000000-0000-0000-0000-000000000001', 'Aubrey Simbi', 5, NULL, NULL, 'CB/RB', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000028', 'a1000000-0000-0000-0000-000000000001', 'Hadji James', 6, NULL, NULL, 'CDM', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000009', 'a1000000-0000-0000-0000-000000000001', 'Isaiah Nyirenda', 7, NULL, NULL, 'B2B/CAM', NULL, 2),
+  ('c1000000-0000-0000-0000-000000000018', 'a1000000-0000-0000-0000-000000000001', 'Moses Banda', 8, NULL, NULL, 'CDM', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000001', 'James Stambuli', 9, NULL, NULL, 'CF/CAM', 1, 1),
+  ('c1000000-0000-0000-0000-000000000003', 'a1000000-0000-0000-0000-000000000001', 'Chimwemwe Chunga', 11, NULL, NULL, 'RW', 4, 1),
+  ('c1000000-0000-0000-0000-000000000023', 'a1000000-0000-0000-0000-000000000001', 'Alick Lungu', 12, NULL, NULL, 'LB', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000011', 'a1000000-0000-0000-0000-000000000001', 'Andrew Lameck', 14, NULL, NULL, 'CB/CDM', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000029', 'a1000000-0000-0000-0000-000000000001', 'Joseph Saiwa', 16, NULL, NULL, 'CB', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000013', 'a1000000-0000-0000-0000-000000000001', 'Hermas Masinja', 17, NULL, NULL, 'RB', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000014', 'a1000000-0000-0000-0000-000000000001', 'Happy Mphepo', 19, NULL, NULL, 'CB', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000001', 'a1000000-0000-0000-0000-000000000001', 'Allen Chihana', 20, NULL, NULL, 'RW/LW/CF/CAM', 6, 1),
+  ('c1000000-0000-0000-0000-000000000007', 'a1000000-0000-0000-0000-000000000001', 'Charles Mafaiti', 21, NULL, NULL, 'CB', 1, NULL),
+  ('c1000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000001', 'James Lumbe', 25, NULL, NULL, 'LW/RW/CAM', 2, 1),
+  ('c1000000-0000-0000-0000-000000000017', 'a1000000-0000-0000-0000-000000000001', 'Joseph McDonald', 26, NULL, NULL, 'CB', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000008', 'a1000000-0000-0000-0000-000000000001', 'Samuel Rukura', 29, NULL, NULL, 'LW/LB', NULL, 2),
+  ('c1000000-0000-0000-0000-000000000010', 'a1000000-0000-0000-0000-000000000001', 'Clever Mkungula', 31, NULL, NULL, 'GK', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000002', 'a1000000-0000-0000-0000-000000000001', 'Blessings Malinda', 47, NULL, NULL, 'CAM/B2B', 5, 2),
+  ('c1000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000001', 'Levison Mnyenyembe', 98, NULL, NULL, 'LW/RW', 1, 4),
+  ('c1000000-0000-0000-0000-000000000030', 'a1000000-0000-0000-0000-000000000001', 'Joshua Waka', 99, NULL, NULL, 'GK', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000016', 'a1000000-0000-0000-0000-000000000001', 'Gift Chunga', NULL, NULL, NULL, 'CF', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000019', 'a1000000-0000-0000-0000-000000000001', 'Lucky Tizola', NULL, NULL, NULL, 'GK', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000020', 'a1000000-0000-0000-0000-000000000001', 'Wongani Kaponya', NULL, NULL, NULL, 'LW/RW', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000021', 'a1000000-0000-0000-0000-000000000001', 'Fanizo Mwansambo', NULL, NULL, NULL, 'CB', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000022', 'a1000000-0000-0000-0000-000000000001', 'Alfred Chizinga', NULL, NULL, NULL, 'CAM/CF', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000025', 'a1000000-0000-0000-0000-000000000001', 'Davie Juao', NULL, NULL, NULL, 'CF', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000026', 'a1000000-0000-0000-0000-000000000001', 'George Mateyo', NULL, NULL, NULL, 'RW', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000027', 'a1000000-0000-0000-0000-000000000001', 'Gift Magola', NULL, NULL, NULL, 'RW', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000031', 'a1000000-0000-0000-0000-000000000001', 'Limbani Kutambe', NULL, NULL, NULL, 'CDM', NULL, NULL),
+  ('c1000000-0000-0000-0000-000000000032', 'a1000000-0000-0000-0000-000000000001', 'Mudrick Salomu', NULL, NULL, NULL, 'CB', NULL, NULL);
 
 -- Senior Team Standings
 INSERT INTO standings (position, team_name, played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES
@@ -74,7 +97,7 @@ INSERT INTO results (team_id, home_team, away_team, home_score, away_score, matc
   ('a1000000-0000-0000-0000-000000000001', 'Ekhaya', 'MAFCO', 1, 0, '2026-06-28', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
   ('a1000000-0000-0000-0000-000000000001', 'Mighty Wanderers', 'Ekhaya', 1, 1, '2026-06-20', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
   ('a1000000-0000-0000-0000-000000000001', 'Ekhaya', 'Masters FC', 2, 0, '2026-05-30', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
-  ('a1000000-0000-0000-0000-000000000001', 'Kamuzu Barracks', 'Ekhaya', 4, 1, '2026-05-23', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
+  ('a1000000-0000-0000-0000-000000000001', 'Kamuzu Barracks', 'Ekhaya', 1, 4, '2026-05-23', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
   ('a1000000-0000-0000-0000-000000000001', 'Ekhaya', 'Moyale Barracks', 2, 0, '2026-05-16', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
   ('a1000000-0000-0000-0000-000000000001', 'Civo Utd', 'Ekhaya', 1, 0, '2026-05-09', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
   ('a1000000-0000-0000-0000-000000000001', 'Ekhaya', 'Red Lions', 1, 1, '2026-05-02', '14:30:00', 'b1000000-0000-0000-0000-000000000001'),
@@ -108,3 +131,17 @@ INSERT INTO performance (player_id, competition_id, goals, assists, medical, min
 -- petty_cash_transactions, staff_allowances, training_allocations) are created in
 -- migration 000001_admin.sql and start empty. Records are entered by staff via the
 -- admin area.
+
+-- Digital tables (news_articles, media_items, ticket_allocations, ticket_bookings,
+-- memberships) are created in migration 000002_digital.sql and start empty.
+-- News, media and ticket runs are entered by staff via the admin area; ticket
+-- bookings and memberships are self-served by fans through the public forms.
+
+-- Club content and messaging (announcements, sponsors, site_settings,
+-- contact_messages) are created in migration 000006_content.sql and start
+-- empty. Content is added by staff via the admin area; contact messages are
+-- left by fans through the Contact page.
+
+-- Payments (payment_transactions) are created in migration 000007_payments.sql
+-- and start empty. Fans create a payment when they book tickets or join as
+-- paid members; staff reconcile them in /admin/payments.

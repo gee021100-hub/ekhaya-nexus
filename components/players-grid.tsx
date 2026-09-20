@@ -10,7 +10,7 @@ export function PlayersGrid({
 }) {
   if (players.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed bg-slate-50 p-10 text-center text-slate-500">
+      <div className="rounded-xl border border-dashed border-club-border bg-white p-10 text-center text-slate-500">
         No players available for this team yet.
       </div>
     );
@@ -22,14 +22,15 @@ export function PlayersGrid({
         <Link
           key={player.id}
           href={`/${teamSlug}/players/${player.id}`}
-          className="group rounded-xl border bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+          className="group ekhaya-card p-5"
         >
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-club-green-100 text-lg font-bold text-club-green-700">
-              {player.name.charAt(0)}
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-club-gold-100 font-display text-lg font-semibold text-club-gold-700">
+              {player.number ?? player.name.charAt(0)}
             </div>
             <div className="min-w-0">
-              <h3 className="truncate font-semibold text-slate-900 group-hover:text-club-green-700">
+              <h3 className="font-display truncate text-lg font-semibold uppercase tracking-wide text-club-ink group-hover:text-club-gold-700">
+                {player.number != null ? `#${player.number} ` : ''}
                 {player.name}
               </h3>
               <p className="text-sm text-slate-500">
@@ -37,16 +38,16 @@ export function PlayersGrid({
               </p>
             </div>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-3 border-t pt-3">
+          <div className="mt-4 grid grid-cols-2 gap-3 border-t border-club-border pt-3">
             <div>
-              <p className="text-xs font-medium uppercase text-slate-500">Goals</p>
-              <p className="text-lg font-bold text-club-green-700">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#8a8a8a]">Goals</p>
+              <p className="font-display mt-0.5 text-xl font-semibold text-club-gold-700">
                 {player.goals ?? '\u2014'}
               </p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase text-slate-500">Assists</p>
-              <p className="text-lg font-bold text-club-green-700">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#8a8a8a]">Assists</p>
+              <p className="font-display mt-0.5 text-xl font-semibold text-club-gold-700">
                 {player.assists ?? '\u2014'}
               </p>
             </div>

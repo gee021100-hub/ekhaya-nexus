@@ -1,4 +1,5 @@
 import type { Fixture } from '@/types';
+import { TeamLogo } from '@/components/brand/team-logo';
 
 function formatDate(date: string): string {
   const d = new Date(`${date}T00:00:00`);
@@ -17,7 +18,7 @@ function formatTime(time: string | null): string | null {
 export function FixturesList({ fixtures }: { fixtures: Fixture[] }) {
   if (fixtures.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed bg-slate-50 p-10 text-center text-slate-500">
+      <div className="rounded-xl border border-dashed border-club-border bg-white p-10 text-center text-slate-500">
         No upcoming fixtures for this team yet.
       </div>
     );
@@ -28,28 +29,30 @@ export function FixturesList({ fixtures }: { fixtures: Fixture[] }) {
       {fixtures.map((fixture) => (
         <div
           key={fixture.id}
-          className="rounded-xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+          className="rounded-xl border border-club-border bg-white p-4 transition-shadow hover:shadow-md"
         >
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <div className="min-w-[7rem]">
-                <p className="text-sm font-semibold text-slate-900">
+                <p className="text-sm font-semibold text-club-ink">
                   {formatDate(fixture.match_date)}
                 </p>
                 <p className="text-xs text-slate-500">{formatTime(fixture.match_time)}</p>
               </div>
-              <div className="font-medium text-slate-900">
-                <span className={fixture.home_team.toLowerCase() === 'ekhaya' ? 'font-bold text-club-green-700' : ''}>
+              <div className="flex items-center gap-2 font-medium text-club-ink">
+                <TeamLogo name={fixture.home_team} size="sm" />
+                <span className={fixture.home_team.toLowerCase() === 'ekhaya' ? 'font-bold text-club-gold-700' : ''}>
                   {fixture.home_team}
                 </span>
-                <span className="mx-2 text-slate-400">vs</span>
-                <span className={fixture.away_team.toLowerCase() === 'ekhaya' ? 'font-bold text-club-green-700' : ''}>
+                <span className="mx-1 text-slate-400">vs</span>
+                <span className={fixture.away_team.toLowerCase() === 'ekhaya' ? 'font-bold text-club-gold-700' : ''}>
                   {fixture.away_team}
                 </span>
+                <TeamLogo name={fixture.away_team} size="sm" />
               </div>
             </div>
             {fixture.competition_name && (
-              <span className="hidden rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600 sm:inline-block">
+              <span className="hidden rounded-full bg-club-gold-100 px-2 py-0.5 text-xs font-semibold text-club-gold-700 sm:inline-block">
                 {fixture.competition_name}
               </span>
             )}

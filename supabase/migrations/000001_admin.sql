@@ -1,4 +1,4 @@
--- Ekhaya All-in-One: Administration schema
+-- Ekhaya App: Administration schema
 -- Player registration, transfers, weekly budgets, petty cash,
 -- staff allowances and training allocations.
 

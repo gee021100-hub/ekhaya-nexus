@@ -1,4 +1,4 @@
--- Ekhaya All-in-One: Core schema for team management
+-- Ekhaya App: Core schema for team management
 
 -- Teams
 CREATE TABLE teams (

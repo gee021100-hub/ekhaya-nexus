@@ -6,12 +6,25 @@ import { cn } from '@/lib/utils';
 
 const items = [
   { label: 'Dashboard', href: '/admin', match: /^\/admin$/ },
+  { label: 'Analytics', href: '/admin/analytics', match: /^\/admin\/analytics/ },
+  { label: 'Reports', href: '/admin/reports', match: /^\/admin\/reports/ },
   { label: 'Players', href: '/admin/players', match: /^\/admin\/players/ },
   { label: 'Transfers', href: '/admin/transfers', match: /^\/admin\/transfers/ },
   { label: 'Budget', href: '/admin/budget', match: /^\/admin\/budget/ },
   { label: 'Petty Cash', href: '/admin/petty-cash', match: /^\/admin\/petty-cash/ },
   { label: 'Staff', href: '/admin/staff', match: /^\/admin\/staff/ },
   { label: 'Training', href: '/admin/training', match: /^\/admin\/training/ },
+  { label: 'News', href: '/admin/news', match: /^\/admin\/news/ },
+  { label: 'Media', href: '/admin/media', match: /^\/admin\/media/ },
+  { label: 'Tickets', href: '/admin/tickets', match: /^\/admin\/tickets/ },
+  { label: 'Store', href: '/admin/store', match: /^\/admin\/store/ },
+  { label: 'Polls', href: '/admin/polls', match: /^\/admin\/polls/ },
+  { label: 'Notifications', href: '/admin/notifications', match: /^\/admin\/notifications/ },
+  { label: 'Payments', href: '/admin/payments', match: /^\/admin\/payments/ },
+  { label: 'Announcements', href: '/admin/announcements', match: /^\/admin\/announcements/ },
+  { label: 'Sponsors', href: '/admin/sponsors', match: /^\/admin\/sponsors/ },
+  { label: 'Messages', href: '/admin/messages', match: /^\/admin\/messages/ },
+  { label: 'Settings', href: '/admin/settings', match: /^\/admin\/settings/ },
 ];
 
 export function AdminNav() {

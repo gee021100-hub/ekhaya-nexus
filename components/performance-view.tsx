@@ -29,10 +29,10 @@ export function PerformanceView({
             type="button"
             onClick={() => setActiveId(comp.id)}
             className={cn(
-              'rounded-full px-4 py-2 text-sm font-medium transition-colors',
+              'rounded-full px-4 py-2 text-sm font-semibold transition-colors',
               activeId === comp.id
-                ? 'bg-club-green-700 text-white'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+                ? 'bg-club-gold text-club-ink'
+                : 'bg-[#F7F5F0] text-[#3d3d3d] hover:bg-club-gold-100',
             )}
           >
             {comp.name}
@@ -40,10 +40,10 @@ export function PerformanceView({
         ))}
       </div>
 
-      <div className="overflow-x-auto rounded-xl border bg-white shadow-sm">
+      <div className="overflow-x-auto rounded-xl border border-club-border bg-white shadow-sm">
         <table className="min-w-full text-sm">
           <thead>
-            <tr className="border-b bg-slate-50 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <tr className="border-b-2 border-club-gold text-left text-xs font-semibold uppercase tracking-wider text-[#8a8a8a]">
               <th className="px-4 py-3">Player</th>
               <th className="px-4 py-3 text-center">Goals</th>
               <th className="px-4 py-3 text-center">Assists</th>
@@ -60,14 +60,14 @@ export function PerformanceView({
               </tr>
             )}
             {rows.map((p) => (
-              <tr key={p.id} className="border-b last:border-b-0 hover:bg-slate-50">
-                <td className="px-4 py-3 font-medium text-slate-900">
+              <tr key={p.id} className="border-b border-club-border last:border-b-0 hover:bg-[#F7F5F0]">
+                <td className="px-4 py-3 font-medium text-club-ink">
                   {p.player_name ?? '\u2014'}
                 </td>
-                <td className="px-4 py-3 text-center text-club-green-700">
+                <td className="px-4 py-3 text-center font-display font-semibold text-club-gold-700">
                   {p.goals ?? '\u2014'}
                 </td>
-                <td className="px-4 py-3 text-center text-club-green-700">
+                <td className="px-4 py-3 text-center font-display font-semibold text-club-gold-700">
                   {p.assists ?? '\u2014'}
                 </td>
                 <td className="px-4 py-3 text-center hidden sm:table-cell">

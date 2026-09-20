@@ -12,3 +12,10 @@ export function formatMoney(amount: number | string | null | undefined, currency
   if (!currency || currency === 'MWK') return `MK ${formatted}`;
   return `${currency} ${formatted}`;
 }
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+/** Basic email sanity check used on fan-facing forms. */
+export function isValidEmail(value: string): boolean {
+  return value.length <= 254 && EMAIL_RE.test(value);
+}
