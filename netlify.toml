@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm build"
+  command = "NODE_OPTIONS=--max-old-space-size=2048 pnpm build"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
